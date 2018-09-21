@@ -1,7 +1,0 @@
-src/main/java/com/validator/beans/base/ServiceValidationResult.java,1537515824000000000,821,FORMATTED
-src/main/java/com/validator/exceptions/ServiceValidationException.java,1537515824000000000,149,FORMATTED
-src/main/java/com/validator/ServiceValidationApplication.java,1537515839000000000,351,FORMATTED
-src/main/java/com/validator/handlers/ServiceValidationExceptionHandler.java,1537515824000000000,1154,FORMATTED
-src/main/java/com/validator/controllers/api/K8sController.java,1537515824000000000,715,FORMATTED
-src/main/java/com/validator/beans/K8sValidationResult.java,1537515824000000000,375,FORMATTED
-src/main/java/com/validator/beans/base/ServiceValidationError.java,1537515824000000000,488,FORMATTED
