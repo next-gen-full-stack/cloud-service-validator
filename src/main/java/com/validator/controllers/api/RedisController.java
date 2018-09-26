@@ -12,30 +12,30 @@ import org.springframework.web.bind.annotation.RestController;
 @ComponentScan("com.validator.beans")
 public class RedisController {
 
-    private final RedisValidationResult redisValidationResult;
+  private final RedisValidationResult redisValidationResult;
 
-    public RedisController(RedisValidationResult serviceValidationResult) {
-        this.redisValidationResult = serviceValidationResult;
+  public RedisController(RedisValidationResult serviceValidationResult) {
+    this.redisValidationResult = serviceValidationResult;
+  }
+
+  @RequestMapping("/api/v1/ping/redis")
+  RedisValidationResult redis(HttpServletRequest request) {
+
+    try {
+      LocalDateTime oldDate = LocalDateTime.now();
+      String result = this.redisValidationResult.ping();
+      LocalDateTime newDate = LocalDateTime.now();
+      // count seconds between dates
+      Duration duration = Duration.between(oldDate, newDate);
+
+      System.out.println(duration.getSeconds() + " seconds");
+      this.redisValidationResult.setResult(result);
+      this.redisValidationResult.setResponseTime(duration.toMillis());
+
+    } catch (Exception e) {
+      System.err.println(e.getClass().getName() + ":[EXCEPtION] " + e.getMessage());
     }
 
-    @RequestMapping("/api/v1/ping/redis")
-    RedisValidationResult redis(HttpServletRequest request) {
-
-        try {
-            LocalDateTime oldDate = LocalDateTime.now();
-            String result = this.redisValidationResult.ping();
-            LocalDateTime newDate = LocalDateTime.now();
-            // count seconds between dates
-            Duration duration = Duration.between(oldDate, newDate);
-
-            System.out.println(duration.getSeconds() + " seconds");
-            this.redisValidationResult.setResult(result);
-            this.redisValidationResult.setResponseTime(duration.toMillis());
-
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ":[EXCEPtION] " + e.getMessage());
-        }
-
-        return this.redisValidationResult;
-    }
+    return this.redisValidationResult;
+  }
 }
