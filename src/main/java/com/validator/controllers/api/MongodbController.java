@@ -3,7 +3,6 @@ package com.validator.controllers.api;
 import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
 import com.validator.beans.MongodbValidationResult;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -29,7 +28,7 @@ public class MongodbController {
   @RequestMapping("/api/v1/ping/mgdb")
   MongodbValidationResult mgdb(HttpServletRequest request) {
     try {
-      MongoDatabase database = mgdbValidationResult.getMongoClient().getDatabase("testdb");
+      MongoDatabase database = mgdbValidationResult.MGDBClient().getDatabase("testdb");
       MongoCollection<Document> collection = database.getCollection("items");
       LocalDateTime oldDate = LocalDateTime.now();
       LOGGER.info("集合选择成功");
@@ -37,7 +36,7 @@ public class MongodbController {
       collection.insertOne(document);
       LOGGER.info("文档插入成功");
 
-      Document myDoc = collection.find(Filters.eq("fruit", "apple")).first();
+      Document myDoc = collection.find().first();
       LOGGER.info((String) myDoc.get("fruit"));
       LocalDateTime newDate = LocalDateTime.now();
       // count seconds between dates
