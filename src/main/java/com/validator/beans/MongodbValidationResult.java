@@ -16,6 +16,11 @@ public class MongodbValidationResult extends ServiceValidationResult {
   private Long responseTime;
   private MongoClient mongoClient;
 
+  /** @param connectUrl the connectUrl to set */
+  public void setConnectUrl(String connectUrl) {
+    this.connectUrl = connectUrl;
+  }
+
   public MongoClient getMongoClient() {
     if (this.mongoClient == null) {
       MongoClientURI uri = new MongoClientURI(this.connectUrl);
