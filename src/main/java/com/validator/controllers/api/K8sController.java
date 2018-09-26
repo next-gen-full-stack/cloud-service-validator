@@ -16,6 +16,12 @@ public class K8sController {
     this.k8sValidationResult = serviceValidationResult;
   }
 
+  /**
+   * This is in the environment that we're going to access and validate
+   *
+   * @param request
+   * @return
+   */
   @RequestMapping("/api/v1/ping/k8s")
   K8sValidationResult k8s(HttpServletRequest request) {
 
