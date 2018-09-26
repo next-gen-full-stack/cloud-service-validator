@@ -1,10 +1,7 @@
 package com.validator.controllers.api;
 
-import com.alibaba.cloudapi.sdk.model.ApiCallback;
-import com.alibaba.cloudapi.sdk.model.ApiRequest;
-import com.alibaba.cloudapi.sdk.model.ApiResponse;
 import com.validator.beans.ApiGatewayValidationResult;
-import com.validator.beans.HttpApiClient;
+
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -45,6 +42,7 @@ public class ApiGatewayController {
     try {
       apiGatewayValidationResult.setService("aliyunApigateway");
       apiGatewayValidationResult.aliyunPing();
+      /*
       HttpApiClient.getInstance()
       .apiDemo(
           new ApiCallback() {
@@ -61,6 +59,7 @@ public class ApiGatewayController {
               }
             }
           });
+          */
     } catch (Exception e) {
       System.err.println(e.getClass().getName() + ":[EXCEPtION] " + e.getMessage());
     }
