@@ -30,11 +30,10 @@ configurations {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include:['*.jar'])
-
-    compile ('io.lettuce:lettuce-core:5.1.0.RELEASE')
-      compile ('org.mongodb:mongodb-driver:3.6.4')
-         compile("org.springframework.boot:spring-boot-starter-web")
+  compile fileTree(dir: 'libs', include:['*.jar'])
+  compile ('io.lettuce:lettuce-core:5.1.0.RELEASE')
+  compile ('org.mongodb:mongodb-driver:3.6.4')
+  compile("org.springframework.boot:spring-boot-starter-web")
   compile("org.springframework.boot:spring-boot-starter-thymeleaf")
   compile("org.springframework.boot:spring-boot-starter-actuator")
 	testCompile("org.springframework.boot:spring-boot-starter-test")
