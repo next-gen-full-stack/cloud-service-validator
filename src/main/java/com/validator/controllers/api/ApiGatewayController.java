@@ -1,8 +1,6 @@
 package com.validator.controllers.api;
 
 import com.validator.beans.ApiGatewayValidationResult;
-
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 import javax.servlet.http.HttpServletRequest;

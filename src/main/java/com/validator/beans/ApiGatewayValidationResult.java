@@ -2,7 +2,6 @@ package com.validator.beans;
 
 import com.google.auto.value.AutoValue;
 import com.validator.beans.base.ServiceValidationResult;
-import java.io.IOException;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -69,31 +68,31 @@ public class ApiGatewayValidationResult extends ServiceValidationResult {
   }
 
   public String aliyunPing() {
-     String content="";
+    String content = "";
     // HTTP Client init
-     /*
-    HttpClientBuilderParams httpParam = new HttpClientBuilderParams();
-    httpParam.setAppKey("25090597");
-    httpParam.setAppSecret("cc55603d37c21dab8bb181d60ba42866");
-    HttpApiClient.getInstance().init(httpParam);
+    /*
+      HttpClientBuilderParams httpParam = new HttpClientBuilderParams();
+      httpParam.setAppKey("25090597");
+      httpParam.setAppSecret("cc55603d37c21dab8bb181d60ba42866");
+      HttpApiClient.getInstance().init(httpParam);
 
-    HttpApiClient.getInstance()
-        .apiDemo(
-            new ApiCallback() {
-              public void onFailure(ApiRequest request, Exception e) {
-                e.printStackTrace();
-              }
-
-              public void onResponse(ApiRequest request, ApiResponse response) {
-                try {
-                  System.out.println(getResultString(response));
-                  //content=getResultString(response);
-                } catch (Exception ex) {
-                  ex.printStackTrace();
+      HttpApiClient.getInstance()
+          .apiDemo(
+              new ApiCallback() {
+                public void onFailure(ApiRequest request, Exception e) {
+                  e.printStackTrace();
                 }
-              }
-            });
-  */
+
+                public void onResponse(ApiRequest request, ApiResponse response) {
+                  try {
+                    System.out.println(getResultString(response));
+                    //content=getResultString(response);
+                  } catch (Exception ex) {
+                    ex.printStackTrace();
+                  }
+                }
+              });
+    */
     return content;
   }
 

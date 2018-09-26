@@ -21,7 +21,7 @@ public class MongodbValidationResult extends ServiceValidationResult {
     this.connectUrl = connectUrl;
   }
 
-  public MongoClient getMongoClient() {
+  public MongoClient MGDBClient() {
     if (this.mongoClient == null) {
       MongoClientURI uri = new MongoClientURI(this.connectUrl);
       MongoClient mongoClient = new MongoClient(uri);
