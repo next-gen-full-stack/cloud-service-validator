@@ -1,5 +1,6 @@
 package com.validator.controllers.api;
 
+import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
@@ -36,9 +37,8 @@ public class MongodbController {
       collection.insertOne(document);
       LOGGER.info("文档插入成功");
 
-      Document queryResult = collection.find(Filters.eq("fruit", "apple")).first();
-      LOGGER.info(queryResult.toJson());
-
+      Document myDoc = collection.find(Filters.eq("fruit", "apple")).first();
+      LOGGER.info((String) myDoc.get("fruit"));
       LocalDateTime newDate = LocalDateTime.now();
       // count seconds between dates
       Duration duration = Duration.between(oldDate, newDate);
@@ -49,4 +49,12 @@ public class MongodbController {
     }
     return this.mgdbValidationResult;
   }
+
+  Block<Document> printBlock =
+      new Block<Document>() {
+        @Override
+        public void apply(final Document document) {
+          System.out.println(document.toJson());
+        }
+      };
 }
