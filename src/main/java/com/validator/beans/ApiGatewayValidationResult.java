@@ -1,19 +1,8 @@
 package com.validator.beans;
 
-import com.alibaba.cloudapi.sdk.constant.SdkConstant;
-import com.alibaba.cloudapi.sdk.model.ApiCallback;
-import com.alibaba.cloudapi.sdk.model.ApiRequest;
-import com.alibaba.cloudapi.sdk.model.ApiResponse;
-import com.alibaba.cloudapi.sdk.model.HttpClientBuilderParams;
 import com.google.auto.value.AutoValue;
 import com.validator.beans.base.ServiceValidationResult;
 import java.io.IOException;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -55,6 +44,7 @@ public class ApiGatewayValidationResult extends ServiceValidationResult {
 
   public String ping() {
     String content = "";
+    /*
     try {
       CloseableHttpClient httpClient = HttpClients.createDefault();
       // 创建请求方法的实例， 并指定请求url
@@ -74,12 +64,14 @@ public class ApiGatewayValidationResult extends ServiceValidationResult {
     } catch (Exception e) {
 
     }
+    */
     return content;
   }
 
   public String aliyunPing() {
      String content="";
     // HTTP Client init
+     /*
     HttpClientBuilderParams httpParam = new HttpClientBuilderParams();
     httpParam.setAppKey("25090597");
     httpParam.setAppSecret("cc55603d37c21dab8bb181d60ba42866");
@@ -101,10 +93,11 @@ public class ApiGatewayValidationResult extends ServiceValidationResult {
                 }
               }
             });
-
+  */
     return content;
   }
 
+  /*
   public String getResultString(ApiResponse response) throws IOException {
     StringBuilder result = new StringBuilder();
     result
@@ -133,4 +126,5 @@ public class ApiGatewayValidationResult extends ServiceValidationResult {
     this.setOutput(result.toString());
     return result.toString();
   }
+  */
 }
