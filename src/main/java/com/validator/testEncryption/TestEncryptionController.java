@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TestEncryptionController {
-	
-	@RequestMapping("/testEncryption")
-    public String testEncryption() throws Exception{
-        
-        BlobBasics basicSamples = new BlobBasics();
-        return basicSamples.runSamples();
-    }
+
+  @RequestMapping("/testEncryption")
+  public String testEncryption() throws Exception {
+
+    BlobBasics basicSamples = new BlobBasics();
+    return basicSamples.runSamples();
+  }
 }

@@ -5,19 +5,19 @@ COMMAND=${1:-build}
 function buildApp() {
     echo "### BUILD ###"
     ./gradlew goJF
-    ./gradlew build
+    SPRING_PROFILES_INCLUDE=local ./gradlew build
 }
 
 function testApp() {
     echo "### TEST ###"
     ./gradlew goJF
-    ./gradlew test
+    SPRING_PROFILES_INCLUDE=local ./gradlew test
 }
 
 function runApp() {
     echo "### RUN ###"
     ./gradlew goJF
-    ./gradlew bootRun
+    SPRING_PROFILES_INCLUDE=local ./gradlew bootRun
 }
 
 function cleanApp() {

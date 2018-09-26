@@ -29,3 +29,5 @@ bin/
 .gradle/
 build/
 .vscode/launch.json
+
+application-local.properties
