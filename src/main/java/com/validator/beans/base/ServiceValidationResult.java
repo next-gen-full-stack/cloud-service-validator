@@ -1,7 +1,5 @@
 package com.validator.beans.base;
 
-import org.springframework.beans.factory.annotation.Value;
-
 public abstract class ServiceValidationResult {
 
   private String service;
