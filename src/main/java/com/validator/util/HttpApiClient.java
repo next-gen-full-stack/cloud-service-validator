@@ -33,11 +33,11 @@ public class HttpApiClient extends ApacheHttpClient {
     if (200 == apiResponse.getCode()) {
       String output = new String(apiResponse.getBody(), SdkConstant.CLOUDAPI_ENCODING);
       apiGatewayValidationResult.setAccessibility(true);
-      apiGatewayValidationResult.setScalability(false);
+      apiGatewayValidationResult.setScalability(true);
       apiGatewayValidationResult.setOutput(output);
     } else {
       apiGatewayValidationResult.setAccessibility(false);
-      apiGatewayValidationResult.setScalability(false);
+      apiGatewayValidationResult.setScalability(true);
     }
     Duration duration = Duration.between(oldDate, newDate);
     apiGatewayValidationResult.setResponseTime(duration.toMillis());
