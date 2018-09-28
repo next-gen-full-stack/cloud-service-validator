@@ -1,17 +1,18 @@
 package com.validator.testEncryption;
 
-import com.microsoft.azure.storage.CloudStorageAccount;
-import com.microsoft.azure.storage.blob.CloudBlobClient;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.security.InvalidKeyException;
 import java.util.Properties;
 
+import com.microsoft.azure.storage.CloudStorageAccount;
+import com.microsoft.azure.storage.blob.CloudBlobClient;
+
 /** Manages the storage blob client */
 public class BlobClientProvider {
-
-  /**
+	
+/**
    * Validates the connection string and returns the storage blob client. The connection string must
    * be in the Azure connection string format.
    *
@@ -22,16 +23,16 @@ public class BlobClientProvider {
    * @throws IllegalArgumentException
    * @throws InvalidKeyException
    */
-  public static CloudBlobClient getBlobClientReference()
+  public CloudBlobClient getBlobClientReference()
       throws RuntimeException, IOException, IllegalArgumentException, URISyntaxException,
           InvalidKeyException {
 
-    // Retrieve the connection string
+//     Retrieve the connection string
     Properties prop = new Properties();
     try {
       InputStream propertyStream =
-          BlobBasics.class.getClassLoader().getResourceAsStream("config.properties");
-      if (propertyStream != null) {
+          BlobBasics.class.getClassLoader().getResourceAsStream("application.properties");
+     if (propertyStream != null) {
         prop.load(propertyStream);
       } else {
         throw new RuntimeException();
@@ -43,7 +44,8 @@ public class BlobClientProvider {
 
     CloudStorageAccount storageAccount;
     try {
-      storageAccount = CloudStorageAccount.parse(prop.getProperty("StorageConnectionString"));
+      storageAccount = CloudStorageAccount.parse(prop.getProperty("storage.azure.connectionString"));
+//      storageAccount = CloudStorageAccount.parse(new BlobConfig().getStorageConnectionString());
     } catch (IllegalArgumentException | URISyntaxException e) {
       System.out.println("\nConnection string specifies an invalid URI.");
       System.out.println(
