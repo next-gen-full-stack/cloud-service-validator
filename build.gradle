@@ -1,6 +1,18 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.5.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.0.5.RELEASE'
-  id 'com.github.sherter.google-java-format' version '0.7.1'
+    id 'com.github.sherter.google-java-format' version '0.7.1'
 	id 'java'
 }
 
@@ -20,6 +32,10 @@ jar {
 
 repositories {
 	jcenter()
+}
+
+repositories {
+	mavenCentral()
 }
 
 sourceSets {
@@ -45,6 +61,8 @@ dependencies {
   compile('org.springframework.boot:spring-boot-starter-jdbc')
   compile('mysql:mysql-connector-java')
   compile('org.postgresql:postgresql')
+  compile('org.apache.kafka:kafka-clients:0.10.0.0')
+  compile files('lib/ons-client-1.7.8.Final.jar')
   testCompile("org.springframework.boot:spring-boot-starter-test")
 
   // Use 'api' rather than 'compile' for Android or java-library projects.
