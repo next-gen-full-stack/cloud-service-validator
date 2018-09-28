@@ -92,12 +92,19 @@ public class DBValidatorController {
 
   @RequestMapping("/api/v1/ping/azure/mysql")
   public DBValidationResult mysqlAzureDBValidation(HttpServletRequest request) {
-    LocalDateTime startTime = LocalDateTime.now();
-    mysqlAzureDBOpUsecase.findAll();
-    LocalDateTime endTime = LocalDateTime.now();
-    // count seconds of the query
-    Duration duration = Duration.between(startTime, endTime);
-    mysqlAzureDBValidationResult.setResponseTime(duration.toMillis());
+    try {
+      mysqlAzureDBValidationResult.setResponseTime(0l);
+      LocalDateTime startTime = LocalDateTime.now();
+      mysqlAzureDBOpUsecase.findAll();
+      LocalDateTime endTime = LocalDateTime.now();
+      // count seconds of the query
+      Duration duration = Duration.between(startTime, endTime);
+      mysqlAzureDBValidationResult.setResponseTime(duration.toMillis());
+    } catch (Exception e) {
+      mysqlAzureDBValidationResult.setAccessibility(false);
+      mysqlAzureDBValidationResult.setScalability(false);
+    }
+
     return this.mysqlAzureDBValidationResult;
   }
 
@@ -105,6 +112,7 @@ public class DBValidatorController {
   public DBValidationResult postgresqlAzureDBValidation(HttpServletRequest request) {
 
     try {
+      postgresqlAzureDBValidationResult.setResponseTime(0l);
       LocalDateTime startTime = LocalDateTime.now();
       postgresqlAzureDBOpUsecase.findAll();
       LocalDateTime endTime = LocalDateTime.now();
@@ -122,6 +130,7 @@ public class DBValidatorController {
   @RequestMapping("/api/v1/ping/ali/mysql")
   public DBValidationResult mysqlAliDBValidation(HttpServletRequest request) {
     try {
+      mysqlAliDBValidationResult.setResponseTime(0l);
       LocalDateTime startTime = LocalDateTime.now();
       mysqlAliDBOpUsecase.findAll();
       LocalDateTime endTime = LocalDateTime.now();
@@ -138,6 +147,7 @@ public class DBValidatorController {
   @RequestMapping("/api/v1/ping/ali/postgresql")
   public DBValidationResult postgresqlAliDBValidation(HttpServletRequest request) {
     try {
+      postgresqlAliDBValidationResult.setResponseTime(0l);
       LocalDateTime startTime = LocalDateTime.now();
       postgresqlAliDBOpUsecase.findAll();
       LocalDateTime endTime = LocalDateTime.now();
