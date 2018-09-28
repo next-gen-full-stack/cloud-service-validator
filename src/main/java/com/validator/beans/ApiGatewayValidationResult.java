@@ -14,6 +14,9 @@ public class ApiGatewayValidationResult extends ServiceValidationResult {
   private String output;
   private String azureUrl;
   private String aliyunUrl;
+  private String aliyunPath;
+  private String aliyunAppKey;
+  private String aliyunAppSecret;
 
   public String getOutput() {
     return output;
@@ -41,7 +44,21 @@ public class ApiGatewayValidationResult extends ServiceValidationResult {
     return responseTime;
   }
 
-  public String ping() {
+  
+  
+  public void setAliyunPath(String aliyunPath) {
+	this.aliyunPath = aliyunPath;
+}
+
+public void setAliyunAppKey(String aliyunAppKey) {
+	this.aliyunAppKey = aliyunAppKey;
+}
+
+public void setAliyunAppSecret(String aliyunAppSecret) {
+	this.aliyunAppSecret = aliyunAppSecret;
+}
+
+public String ping() {
     String content = "";
     /*
     try {
