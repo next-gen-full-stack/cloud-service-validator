@@ -76,11 +76,11 @@ public class ApiGatewayValidationResult extends ServiceValidationResult {
               + k8sValidationResult.getScalability();
       this.setAccessibility(true);
       this.setLocation("Azure");
-      this.setScalability(false);
+      this.setScalability(true);
     } catch (Exception e) {
       this.setAccessibility(false);
       this.setLocation("Azure");
-      this.setScalability(false);
+      this.setScalability(true);
       System.out.println("" + e.getMessage());
     }
     return content;
