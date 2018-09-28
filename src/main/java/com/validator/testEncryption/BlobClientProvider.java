@@ -22,15 +22,15 @@ public class BlobClientProvider {
    * @throws IllegalArgumentException
    * @throws InvalidKeyException
    */
-  public static CloudBlobClient getBlobClientReference()
+  public CloudBlobClient getBlobClientReference()
       throws RuntimeException, IOException, IllegalArgumentException, URISyntaxException,
           InvalidKeyException {
 
-    // Retrieve the connection string
+    //     Retrieve the connection string
     Properties prop = new Properties();
     try {
       InputStream propertyStream =
-          BlobBasics.class.getClassLoader().getResourceAsStream("config.properties");
+          BlobBasics.class.getClassLoader().getResourceAsStream("application.properties");
       if (propertyStream != null) {
         prop.load(propertyStream);
       } else {
@@ -43,7 +43,10 @@ public class BlobClientProvider {
 
     CloudStorageAccount storageAccount;
     try {
-      storageAccount = CloudStorageAccount.parse(prop.getProperty("StorageConnectionString"));
+      storageAccount =
+          CloudStorageAccount.parse(prop.getProperty("storage.azure.connectionString"));
+      //      storageAccount = CloudStorageAccount.parse(new
+      // BlobConfig().getStorageConnectionString());
     } catch (IllegalArgumentException | URISyntaxException e) {
       System.out.println("\nConnection string specifies an invalid URI.");
       System.out.println(

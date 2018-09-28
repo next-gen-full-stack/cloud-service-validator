@@ -10,12 +10,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 @Configuration
 public class MultipleDataSource {
-  @Autowired private MySqlAliDBConfig mySqlAliDBConfig;
-  @Autowired private PostgresqlAliDBConfig postgresqlAliDBConfig;
+  @Autowired private DBConfig mySqlAliDBConfig;
+  @Autowired private DBConfig postgresqlAliDBConfig;
 
-  @Autowired private PostgresqlAzureDBConfig postgresqlAzureDBConfig;
+  @Autowired private DBConfig postgresqlAzureDBConfig;
 
-  @Autowired private MySqlAzureDBConfig mySqlAzureDBConfig;
+  @Autowired private DBConfig mySqlAzureDBConfig;
 
   @Bean(name = "mysqlAliDB")
   public DataSource mysqlAliDataSource() {
