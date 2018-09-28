@@ -38,26 +38,8 @@ public class ApiGatewayController {
   @RequestMapping("/api/v1/ping/aliyunApigateway")
   ApiGatewayValidationResult aliyunApiGateway(HttpServletRequest request) {
     try {
-      apiGatewayValidationResult.setService("aliyunApigateway");
-      apiGatewayValidationResult.aliyunPing();
-      /*
-      HttpApiClient.getInstance()
-      .apiDemo(
-          new ApiCallback() {
-            public void onFailure(ApiRequest request, Exception e) {
-              e.printStackTrace();
-            }
-
-            public void onResponse(ApiRequest request, ApiResponse response) {
-              try {
-                System.out.println(apiGatewayValidationResult.getResultString(response));
-                //content=getResultString(response);
-              } catch (Exception ex) {
-                ex.printStackTrace();
-              }
-            }
-          });
-          */
+      // apiGatewayValidationResult.setService("aliyunApigateway");
+      apiGatewayValidationResult.aliyunping();
     } catch (Exception e) {
       System.err.println(e.getClass().getName() + ":[EXCEPtION] " + e.getMessage());
     }
