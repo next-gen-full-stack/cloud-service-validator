@@ -1,83 +1,73 @@
-$(function () {
+(function (list) {
   'use strict'
 
   $('[data-toggle="offcanvas"]').on('click', function () {
     $('.offcanvas-collapse').toggleClass('open')
   });
 
-  var list = [
-    {
-      group: 'Microsoft Azure', 
-      endpoints: [
-        {
-          name: 'Kubernetes', 
-          path: '/api/v1/ping/azure/k8s'
-        }, 
-        {
-          name: 'Redis', 
-          path: '/api/v1/ping/redis'
-        }, 
-        {
-          name: 'Mongo', 
-          path: '/api/v1/ping/mgdb'
-        }
-      ]
-    }, 
-    {
-      group: 'Ali Cloud', 
-      endpoints: [
-        {
-          name: 'Kubernetes', 
-          path: '/api/v1/ping/k8s'
-        }
-      ]
-    }
-  ];
-
   var jContainer = $('.ui-cloud-providers');
+  var jRequests = {};
   for(var i in list) {
 
     var cloud = list[i];
-    var jSubContainer = $('<div class="my-3 p-3 bg-white rounded shadow-sm"></div>');
+    var cloudId = 'cloud-'+cloud.id;
+    var jCloudContainer = $('<div class="my-3 p-3 bg-white rounded shadow-sm"></div>');
+    jCloudContainer.attr('id', cloudId);
     var jSubTitle = $('<h6 class="border-bottom border-gray pb-2 mb-0"></h6>');
     jSubTitle.text(cloud.group);
-    jSubContainer.append(jSubTitle);
+    jCloudContainer.append(jSubTitle);
+
+    var jStatusBody = $('<div class="table-responsive-md"><table class="table"><thead><tr><th scope="col"></th><th scope="col">Service</th><th scope="col">Accessibility</th><th scope="col">Scalability</th><th scope="col">Performance</th><th scope="col"></th></tr></thead><tbody class="ui-table-body"></tbody></table></div>');
+
+    jCloudContainer.append(jStatusBody);
 
     for(var j in cloud.endpoints) {
 
       var service = cloud.endpoints[j];
-      var serviceId = 'svc-'+service.name.toLowerCase();
-      
-      var jServiceContainer = $('<div class="media text-muted pt-3"></div>');
-      jServiceContainer.attr('id', serviceId);
+      var serviceId = 'svc-'+cloud.id+'-'+service.name.toLowerCase();
 
-      // Image
-      var jStatusImage = $('<img data-src="" alt="" class="mr-2 rounded" />');
-      jServiceContainer.append(jStatusImage);
-      jStatusImage.attr('data-src', 'holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1');
-      // SubContainer of service
-      var jStatusBody = $('<div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"></div>');
-
-      var jStatusTop = $('<div class="d-flex justify-content-between align-items-center w-100"></div>');
-      var jStatusName = $('<strong class="text-gray-dark"></strong>');
-      var jStatusButton = $('<a href="#" class="ui-refresh">Refresh</a>');
-      
-
-      var jStatusBottom = $('<span class="d-block"></span>');
-
-      jStatusName.text(service.name);
-      jStatusTop.append(jStatusName);
-      jStatusTop.append(jStatusButton);
-      jStatusBody.append(jStatusTop);
-      jStatusBody.append(jStatusBottom);
-
-      jStatusBottom.text('OK or Not OK');
-
-      jServiceContainer.append(jStatusBody);
-      jSubContainer.append(jServiceContainer);
-
-      jContainer.append(jSubContainer);
+      jRequests[serviceId] = { url: service.path, name: service.name, cloud: cloudId };
     }
+
+    jContainer.append(jCloudContainer);
   }
 
-});
+  var sendRequest = function() {
+
+    var listOfKeys = Object.keys(jRequests);
+    if(listOfKeys.length > 0) {
+      var serviceId = listOfKeys[0];      
+      var url = jRequests[serviceId].url;
+      var name = jRequests[serviceId].name;
+      var cloud = jRequests[serviceId].cloud;
+      delete jRequests[serviceId];
+
+      var cContainer = $('#' + cloud);
+      var rRowContainer = cContainer.find('.ui-table-body');
+
+      $.ajax({
+        url: url, 
+        success: function(data) {
+          var colorCode = 'cc0000';
+          if(data.accessibility) {
+            colorCode = '28a745';
+          }
+          var row = '<tr><td><img alt="" class="mr-2 rounded" data-src="holder.js/16x16?theme=thumb&bg='+colorCode+'&fg='+colorCode+'&size=1" /></td><td>'+(data.service ? data.service : name)+'</td><td>'+(data.accessibility ? 'Yes' : 'No')+'</td><td>'+(data.scalability ? 'Yes' : 'No')+'</td><td>'+(data.responseTime ? (data.responseTime +'ms') : 'N/A')+'</td></tr>';
+          rRowContainer.append(row);
+          Holder.run({ });
+          sendRequest();
+        }, 
+        error: function(err) {
+
+          var row = '<tr><td><img alt="" class="mr-2 rounded" data-src="holder.js/16x16?theme=thumb&bg=cc0000&fg=cc0000&size=1" /></td><td>'+name+'</td><td>No</td><td>N/A</td><td>N/A</td></tr>';
+          rRowContainer.append(row);
+          Holder.run({ });
+          sendRequest();
+        }
+      });
+    }
+  };
+
+  sendRequest();
+
+})(ENDPOINTS);
