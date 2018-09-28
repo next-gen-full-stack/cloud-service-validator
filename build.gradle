@@ -5,12 +5,18 @@ plugins {
 }
 
 apply plugin: 'java'
+// apply plugin: 'war'
 apply plugin: 'io.spring.dependency-management'
 
 jar {
-	baseName = 'playground'
+	baseName = 'cloud-validator'
 	version =  '0.0.1-SNAPSHOT'
 }
+
+// war {
+//   baseName = 'cloud-validator'
+// 	version =  '0.0.1-SNAPSHOT'
+// }
 
 repositories {
 	jcenter()
@@ -43,13 +49,18 @@ dependencies {
   annotationProcessor "com.google.auto.value:auto-value:1.6.2"
   
     // https://mvnrepository.com/artifact/com.microsoft.azure/azure-storage
-    compile group: 'com.microsoft.azure', name: 'azure-storage', version: '4.2.0'
-  
+  compile group: 'com.microsoft.azure', name: 'azure-storage', version: '4.2.0'
+
+  runtime 'org.springframework.boot:spring-boot-starter-tomcat'
 }
 
 bootJar {
     archiveName = "app.jar"
 }
+
+// bootWar {
+//     archiveName = "app.war"
+// }
 
 task codeTest(type: Test) {
     testClassesDirs = sourceSets.addtionals.output.classesDirs
