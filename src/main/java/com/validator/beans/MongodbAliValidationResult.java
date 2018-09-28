@@ -27,24 +27,9 @@ public class MongodbAliValidationResult extends ServiceValidationResult {
       MongoClient mongoClient = new MongoClient(uri);
       this.mongoClient = mongoClient;
     }
-    // if (this.mongoClient == null) {
-    // String password = "daivb201809";
-    // MongoClientOptions options = MongoClientOptions.builder().build();
 
-    // MongoCredential credential =
-    // MongoCredential.createMongoCRCredential("root", "admin",
-    // password.toCharArray());
-    // ServerAddress server =
-    // new ServerAddress("dds-2ze22c84328c0294-pub.mongodb.rds.aliyuncs.com", 3717);
-    // // MongoClient(server, Arrays.asList(credential));
-    // MongoClient mongoClient = new MongoClient(server, Arrays.asList(credential),
-    // options);
-    // this.mongoClient = mongoClient;
-    // }
     return this.mongoClient;
   }
-
-  private void setupCredential(MongoClient client) {}
 
   /** @return the responseTime */
   public Long getResponseTime() {

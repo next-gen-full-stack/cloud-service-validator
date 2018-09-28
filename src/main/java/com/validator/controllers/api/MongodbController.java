@@ -57,15 +57,10 @@ public class MongodbController {
       MongoDatabase database = alimgdbValidationResult.MGDBClient().getDatabase("daivb");
       MongoCollection<Document> collection = database.getCollection("daivb");
       LocalDateTime oldDate = LocalDateTime.now();
-      LOGGER.info("1");
-
-      for (String name : database.listCollectionNames()) {
-        LOGGER.info(name);
-      }
       LOGGER.info("Ali集合选择成功");
-      Document document = new Document("fruit", "apple");
-      collection.insertOne(document);
-      LOGGER.info("文档插入成功");
+      // Document document = new Document("fruit", "apple");
+      // collection.insertOne(document);
+      // LOGGER.info("文档插入成功");
 
       Document myDoc = collection.find().first();
       LOGGER.info((String) myDoc.get("fruit"));
