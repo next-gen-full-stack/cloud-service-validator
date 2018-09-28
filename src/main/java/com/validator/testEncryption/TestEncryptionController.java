@@ -12,7 +12,7 @@ public class TestEncryptionController {
     BlobBasics basicSamples = new BlobBasics();
     return basicSamples.runSamples();
   }
-  
+
   @RequestMapping("/testEncryptionPerform")
   public String testEncryptionPerform() throws Exception {
 
