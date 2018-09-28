@@ -42,7 +42,10 @@ dependencies {
   compile("org.springframework.boot:spring-boot-starter-web")
   compile("org.springframework.boot:spring-boot-starter-thymeleaf")
   compile("org.springframework.boot:spring-boot-starter-actuator")
-	testCompile("org.springframework.boot:spring-boot-starter-test")
+  compile('org.springframework.boot:spring-boot-starter-jdbc')
+  compile('mysql:mysql-connector-java')
+  compile('org.postgresql:postgresql')
+  testCompile("org.springframework.boot:spring-boot-starter-test")
 
   // Use 'api' rather than 'compile' for Android or java-library projects.
   compile             "com.google.auto.value:auto-value-annotations:1.6.2"
