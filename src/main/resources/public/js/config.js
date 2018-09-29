@@ -22,6 +22,14 @@ var ENDPOINTS = [
       {
           name: 'postgresql',
           path: '/api/v1/ping/azure/postgresql'
+      },
+      {
+          name: 'apiGateway',
+          path: '/api/v1/ping/azureApigateway'
+      },
+      {
+          name: 'pushNotification',
+          path: '/api/v1/ping/azurePush'
       }
     ]
   },
@@ -40,6 +48,14 @@ var ENDPOINTS = [
       {
           name: 'postgresql',
           path: '/api/v1/ping/ali/postgresql'
+      },
+      {
+          name: 'apiGateway',
+          path: '/api/v1/ping/aliyunApigateway'
+      },
+      {
+          name: 'pushNotification',
+          path: '/api/v1/ping/aliPush'
       }
     ]
   }
