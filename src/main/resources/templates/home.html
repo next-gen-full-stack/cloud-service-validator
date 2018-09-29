@@ -16,18 +16,18 @@
   <body class="bg-light">
 
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-      <a class="navbar-brand mr-auto mr-lg-0" href="#">Cloud Service Availability Dashboard</a>
+      <a class="navbar-brand mr-auto mr-lg-0" href="/">Cloud Service Availability Dashboard</a>
       <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
         <span class="navbar-toggler-icon"></span>
       </button>
     </nav>
 
     <main role="main" class="container">
-      <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded shadow-sm ui-relative">
-        <img class="mr-3" src="/assets/svgs/cloud_64.svg" alt="" width="48" height="48">
+      <div class="d-flex align-items-center p-3 my-3 text-white-50 rounded shadow-sm ui-relative" th:attrappend="class=${' bg-' + id}">
+        <img class="mr-3" src="" th:attr="src=${'/assets/svgs/'+id+'.svg'}" alt="" width="48" height="48">
         <div class="lh-100">
-          <h6 class="mb-0 text-white lh-100">Hosted in the Germany Region</h6>
-          <small>IBM Cloud</small>
+          <h6 class="mb-0 text-white lh-100">Hosted in the <span th:text="${region}">Unknown</span> Region</h6>
+          <small th:text="${location}">Unknown Cloud</small>
         </div>
 
         <div class="ui-loader"><div class="lds-ring"><div></div><div></div><div></div><div></div></div></div>
@@ -37,9 +37,6 @@
       <div class="ui-cloud-providers"></div>
 
     </main>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
 
     <script src="/js/vendor/jquery-3.3.1.min.js"></script>
     <script src="/js/vendor/popper.min.js"></script>
