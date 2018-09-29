@@ -21,7 +21,7 @@ public class ApiGatewayController {
   @RequestMapping("/api/v1/ping/azureApigateway")
   ApiGatewayValidationResult azureApiGateway(HttpServletRequest request) {
     try {
-      apiGatewayValidationResult.setService("azureApigateway");
+      // apiGatewayValidationResult.setService("azureApigateway");
       LocalDateTime oldDate = LocalDateTime.now();
       String result = this.apiGatewayValidationResult.ping();
       LocalDateTime newDate = LocalDateTime.now();
