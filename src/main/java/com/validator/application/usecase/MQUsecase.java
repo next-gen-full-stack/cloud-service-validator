@@ -21,7 +21,7 @@ public class MQUsecase {
     // SecretKey 阿里云身份验证，在阿里云服务器管理控制台创建
     properties.put(PropertyKeyConst.SecretKey, "hxzEydhgkJnvY6bAlPOzS3LwMtoZYb");
     // 设置发送超时时间，单位毫秒
-    properties.setProperty(PropertyKeyConst.SendMsgTimeoutMillis, "3000");
+    properties.setProperty(PropertyKeyConst.SendMsgTimeoutMillis, "8000");
     // 设置 TCP 接入域名（此处以公共云生产环境为例）
     properties.put(
         PropertyKeyConst.ONSAddr,
