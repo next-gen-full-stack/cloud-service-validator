@@ -75,11 +75,9 @@ public class ApiGatewayValidationResult extends ServiceValidationResult {
               + ";scalability:"
               + k8sValidationResult.getScalability();
       this.setAccessibility(true);
-      this.setLocation("Azure");
       this.setScalability(true);
     } catch (Exception e) {
       this.setAccessibility(false);
-      this.setLocation("Azure");
       this.setScalability(true);
       System.out.println("" + e.getMessage());
     }
@@ -88,8 +86,8 @@ public class ApiGatewayValidationResult extends ServiceValidationResult {
 
   public void aliyunping() {
     try {
-      this.setService("aliyunApigateway");
-      this.setLocation("Alibaba Cloud");
+      // this.setService("aliyunApigateway");
+      // this.setLocation("Alibaba Cloud");
       // apiGatewayValidationResult.aliyunPing();
       HttpClientBuilderParams httpParam = new HttpClientBuilderParams();
       httpParam.setHost(this.aliyunUrl);
