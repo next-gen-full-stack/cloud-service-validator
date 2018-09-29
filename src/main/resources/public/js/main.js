@@ -29,14 +29,16 @@
           if(data.accessibility) {
             colorCode = '28a745';
           }
-          var row = '<tr><td><img alt="" class="mr-2 rounded" data-src="holder.js/16x16?theme=thumb&bg='+colorCode+'&fg='+colorCode+'&size=1" /></td><td>'+(data.service ? data.service : name)+'</td><td>'+(data.accessibility ? 'Yes' : 'No')+'</td><td>'+(data.scalability ? 'Yes' : 'No')+'</td><td>'+(data.responseTime ? (data.responseTime +'ms') : 'N/A')+'</td></tr>';
+          var imageTag = '<img alt="" class="mr-2 rounded" data-src="holder.js/16x16?theme=thumb&bg='+colorCode+'&fg='+colorCode+'&size=1" />';
+          var row = '<tr><th scope="row">'+(data.service ? data.service : name)+'</th><td>'+ imageTag + ' ' + (data.accessibility ? 'Yes' : 'No')+'</td><td>'+(data.responseTime ? (data.responseTime +'ms') : 'N/A')+'</td></tr>';
           rRowContainer.append(row);
           Holder.run({ });
           sendRequest();
         }, 
         error: function(err) {
 
-          var row = '<tr><td><img alt="" class="mr-2 rounded" data-src="holder.js/16x16?theme=thumb&bg=cc0000&fg=cc0000&size=1" /></td><td>'+name+'</td><td>No</td><td>N/A</td><td>N/A</td></tr>';
+          var imageTag = '<img alt="" class="mr-2 rounded" data-src="holder.js/16x16?theme=thumb&bg=cc0000&fg=cc0000&size=1" />';
+          var row = '<tr><th scope="row">'+name+'</th><td>'+imageTag+' No</td><td>N/A</td></tr>';
           rRowContainer.append(row);
           Holder.run({ });
           sendRequest();
@@ -62,7 +64,7 @@
         jSubTitle.text(cloud.group);
         jCloudContainer.append(jSubTitle);
 
-        var jStatusBody = $('<div class="table-responsive-md"><table class="table"><thead><tr><th scope="col"></th><th scope="col">Service</th><th scope="col">Accessibility</th><th scope="col">Scalability</th><th scope="col">Latency</th><th scope="col"></th></tr></thead><tbody class="ui-table-body"></tbody></table></div>');
+        var jStatusBody = $('<div class="table-responsive-md"><table class="table table-hover"><thead><tr><th scope="row">Service</th><th scope="col" class="w-25">Accessibility</th><th scope="col" class="w-25">Latency</th></tr></thead><tbody class="ui-table-body"></tbody></table></div>');
 
         jCloudContainer.append(jStatusBody);
 

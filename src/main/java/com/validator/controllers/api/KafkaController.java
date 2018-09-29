@@ -19,6 +19,7 @@ public class KafkaController {
 
   /**
    * Only support internal communication in the same region
+   *
    * @param request
    * @return
    */
@@ -32,9 +33,10 @@ public class KafkaController {
     mqValidationResult.setAccessibility(false);
     return this.mqValidationResult;
   }
-  
+
   /**
    * Only support internal communication in the internal network
+   *
    * @param request
    * @return
    */

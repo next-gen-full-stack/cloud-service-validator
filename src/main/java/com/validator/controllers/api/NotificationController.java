@@ -13,60 +13,60 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @ComponentScan("com.validator.beans")
 public class NotificationController {
-    private NotificationValidationResult notificationValidationResult;
-    private AzNotiConfiguration azConfig;
-    private AliNotiConfiguration aliConfig;
-    
-    public NotificationController(
-                                  NotificationValidationResult serviceValidationResult,
-                                  AzNotiConfiguration azNotiConfiguration,
-                                  AliNotiConfiguration aliNotiConfiguration) {
-        this.notificationValidationResult = serviceValidationResult;
-        this.azConfig = azNotiConfiguration;
-        this.aliConfig = aliNotiConfiguration;
+  private NotificationValidationResult notificationValidationResult;
+  private AzNotiConfiguration azConfig;
+  private AliNotiConfiguration aliConfig;
+
+  public NotificationController(
+      NotificationValidationResult serviceValidationResult,
+      AzNotiConfiguration azNotiConfiguration,
+      AliNotiConfiguration aliNotiConfiguration) {
+    this.notificationValidationResult = serviceValidationResult;
+    this.azConfig = azNotiConfiguration;
+    this.aliConfig = aliNotiConfiguration;
+  }
+
+  @RequestMapping("/api/v1/ping/azurePush")
+  NotificationValidationResult azureNotification(HttpServletRequest request) {
+    try {
+      // notificationValidationResult.setService("AzureNotification");
+      LocalDateTime oldDate = LocalDateTime.now();
+      boolean bool = notificationValidationResult.azurePing(azConfig);
+      LocalDateTime newDate = LocalDateTime.now();
+      Duration duration = Duration.between(oldDate, newDate);
+      if (bool) {
+        notificationValidationResult.setAccessibility(true);
+        notificationValidationResult.setScalability(true);
+      } else {
+        notificationValidationResult.setAccessibility(false);
+      }
+      this.notificationValidationResult.setResponseTime(duration.toMillis());
+    } catch (Exception e) {
+      notificationValidationResult.setAccessibility(false);
+      System.err.println(e.getClass().getName() + ":[EXCEPtION] " + e.getMessage());
     }
-    
-    @RequestMapping("/api/v1/ping/azurePush")
-    NotificationValidationResult azureNotification(HttpServletRequest request) {
-        try {
-            // notificationValidationResult.setService("AzureNotification");
-            LocalDateTime oldDate = LocalDateTime.now();
-            boolean bool = notificationValidationResult.azurePing(azConfig);
-            LocalDateTime newDate = LocalDateTime.now();
-            Duration duration = Duration.between(oldDate, newDate);
-            if (bool) {
-                notificationValidationResult.setAccessibility(true);
-                notificationValidationResult.setScalability(true);
-            } else {
-                notificationValidationResult.setAccessibility(false);
-            }
-            this.notificationValidationResult.setResponseTime(duration.toMillis());
-        } catch (Exception e) {
-            notificationValidationResult.setAccessibility(false);
-            System.err.println(e.getClass().getName() + ":[EXCEPtION] " + e.getMessage());
-        }
-        return notificationValidationResult;
+    return notificationValidationResult;
+  }
+
+  @RequestMapping("/api/v1/ping/aliPush")
+  NotificationValidationResult aliNotification(HttpServletRequest request) {
+    try {
+      // notificationValidationResult.setService("AliNotification");
+      LocalDateTime oldDate = LocalDateTime.now();
+      boolean bool = notificationValidationResult.aliPing(aliConfig);
+      LocalDateTime newDate = LocalDateTime.now();
+      Duration duration = Duration.between(oldDate, newDate);
+      if (bool) {
+        notificationValidationResult.setAccessibility(true);
+        notificationValidationResult.setScalability(true);
+      } else {
+        notificationValidationResult.setAccessibility(false);
+      }
+      this.notificationValidationResult.setResponseTime(duration.toMillis());
+    } catch (Exception e) {
+      System.err.println(e.getClass().getName() + ":[EXCEPtION] " + e.getMessage());
+      notificationValidationResult.setAccessibility(false);
     }
-    
-    @RequestMapping("/api/v1/ping/aliPush")
-    NotificationValidationResult aliNotification(HttpServletRequest request) {
-        try {
-            // notificationValidationResult.setService("AliNotification");
-            LocalDateTime oldDate = LocalDateTime.now();
-            boolean bool = notificationValidationResult.aliPing(aliConfig);
-            LocalDateTime newDate = LocalDateTime.now();
-            Duration duration = Duration.between(oldDate, newDate);
-            if (bool) {
-                notificationValidationResult.setAccessibility(true);
-                notificationValidationResult.setScalability(true);
-            } else {
-                notificationValidationResult.setAccessibility(false);
-            }
-            this.notificationValidationResult.setResponseTime(duration.toMillis());
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ":[EXCEPtION] " + e.getMessage());
-            notificationValidationResult.setAccessibility(false);
-        }
-        return notificationValidationResult;
-    }
+    return notificationValidationResult;
+  }
 }
