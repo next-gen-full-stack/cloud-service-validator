@@ -17,7 +17,7 @@ public class NotificationController {
 	public NotificationController(NotificationValidationResult serviceValidationResult) {
 	    this.notificationValidationResult = serviceValidationResult;
 	  }
-	@RequestMapping("/api/v1/ping/push")
+	@RequestMapping("/api/v1/ping/azurePush")
 	  NotificationValidationResult azureNotification(HttpServletRequest request) {
 	    try {
 	    	notificationValidationResult.setService("AzureNotification");
@@ -28,7 +28,7 @@ public class NotificationController {
 	    return notificationValidationResult;
 	  }
 	
-	@RequestMapping("/api/v1/ping/push")
+	@RequestMapping("/api/v1/ping/aliPush")
 	  NotificationValidationResult aliNotification(HttpServletRequest request) {
 	    try {
 	    	notificationValidationResult.setService("AliNotification");
