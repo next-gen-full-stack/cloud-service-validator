@@ -1,9 +1,12 @@
 package com.validator.beans;
 
+import com.alibaba.cloudapi.sdk.model.HttpClientBuilderParams;
 import com.google.auto.value.AutoValue;
 import com.validator.beans.base.ServiceValidationResult;
+import com.validator.util.HttpApiClient;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 @Component
 @AutoValue
@@ -14,6 +17,9 @@ public class ApiGatewayValidationResult extends ServiceValidationResult {
   private String output;
   private String azureUrl;
   private String aliyunUrl;
+  private String aliyunPath;
+  private String aliyunAppKey;
+  private String aliyunAppSecret;
 
   public String getOutput() {
     return output;
@@ -41,89 +47,58 @@ public class ApiGatewayValidationResult extends ServiceValidationResult {
     return responseTime;
   }
 
+  public void setAliyunPath(String aliyunPath) {
+    this.aliyunPath = aliyunPath;
+  }
+
+  public void setAliyunAppKey(String aliyunAppKey) {
+    this.aliyunAppKey = aliyunAppKey;
+  }
+
+  public void setAliyunAppSecret(String aliyunAppSecret) {
+    this.aliyunAppSecret = aliyunAppSecret;
+  }
+
   public String ping() {
     String content = "";
-    /*
+    RestTemplate restTemplate = new RestTemplate();
     try {
-      CloseableHttpClient httpClient = HttpClients.createDefault();
-      // 创建请求方法的实例， 并指定请求url
-      HttpGet httpget = new HttpGet(azureUrl);
-      // 获取http响应状态码
-      CloseableHttpResponse response = httpClient.execute(httpget);
-      HttpEntity entity = response.getEntity();
-      if (response.getStatusLine().getStatusCode() == 200) {
-        this.setAccessibility(true);
-      } else {
-        this.setAccessibility(false);
-      }
-      // 接收响应头
-      content = response.getStatusLine() + ":" + EntityUtils.toString(entity, "utf-8");
-      System.out.println(content);
-      httpClient.close();
+      K8sValidationResult k8sValidationResult =
+          restTemplate.getForObject(azureUrl, K8sValidationResult.class, 200);
+      content =
+          "service:"
+              + k8sValidationResult.getService()
+              + ";location:"
+              + k8sValidationResult.getLocation()
+              + ";accessibility:"
+              + k8sValidationResult.getAccessibility()
+              + ";scalability:"
+              + k8sValidationResult.getScalability();
+      this.setAccessibility(true);
+      this.setLocation("Azure");
+      this.setScalability(true);
     } catch (Exception e) {
-
+      this.setAccessibility(false);
+      this.setLocation("Azure");
+      this.setScalability(true);
+      System.out.println("" + e.getMessage());
     }
-    */
     return content;
   }
 
-  public String aliyunPing() {
-    String content = "";
-    // HTTP Client init
-    /*
+  public void aliyunping() {
+    try {
+      this.setService("aliyunApigateway");
+      this.setLocation("Alibaba Cloud");
+      // apiGatewayValidationResult.aliyunPing();
       HttpClientBuilderParams httpParam = new HttpClientBuilderParams();
-      httpParam.setAppKey("25090597");
-      httpParam.setAppSecret("cc55603d37c21dab8bb181d60ba42866");
+      httpParam.setHost(this.aliyunUrl);
+      httpParam.setAppKey(this.aliyunAppKey);
+      httpParam.setAppSecret(this.aliyunAppSecret);
       HttpApiClient.getInstance().init(httpParam);
-
-      HttpApiClient.getInstance()
-          .apiDemo(
-              new ApiCallback() {
-                public void onFailure(ApiRequest request, Exception e) {
-                  e.printStackTrace();
-                }
-
-                public void onResponse(ApiRequest request, ApiResponse response) {
-                  try {
-                    System.out.println(getResultString(response));
-                    //content=getResultString(response);
-                  } catch (Exception ex) {
-                    ex.printStackTrace();
-                  }
-                }
-              });
-    */
-    return content;
-  }
-
-  /*
-  public String getResultString(ApiResponse response) throws IOException {
-    StringBuilder result = new StringBuilder();
-    result
-        .append("Response from backend server")
-        .append(SdkConstant.CLOUDAPI_LF)
-        .append(SdkConstant.CLOUDAPI_LF);
-    result
-        .append("ResultCode:")
-        .append(SdkConstant.CLOUDAPI_LF)
-        .append(response.getCode())
-        .append(SdkConstant.CLOUDAPI_LF)
-        .append(SdkConstant.CLOUDAPI_LF);
-    if (response.getCode() != 200) {
-      result
-          .append("Error description:")
-          .append(response.getHeaders().get("X-Ca-Error-Message"))
-          .append(SdkConstant.CLOUDAPI_LF)
-          .append(SdkConstant.CLOUDAPI_LF);
+      HttpApiClient.getInstance().apiDemo(this.aliyunPath, this);
+    } catch (Exception e) {
+      System.err.println(e.getClass().getName() + ":[EXCEPtION] " + e.getMessage());
     }
-
-    result
-        .append("ResultBody:")
-        .append(SdkConstant.CLOUDAPI_LF)
-        .append(new String(response.getBody(), SdkConstant.CLOUDAPI_ENCODING));
-    System.out.println(""+response.getCode());
-    this.setOutput(result.toString());
-    return result.toString();
   }
-  */
 }
