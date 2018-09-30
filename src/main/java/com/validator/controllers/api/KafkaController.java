@@ -1,9 +1,11 @@
 package com.validator.controllers.api;
 
+import com.validator.application.usecase.MQUsecase;
 import com.validator.beans.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @ComponentScan("com.validator.beans")
 public class KafkaController {
   private MQValidationResult mqValidationResult;
+  private @Autowired MQUsecase mqUsecase;
 
   public KafkaController(MQValidationResult mqValidationResult) {
     this.mqValidationResult = mqValidationResult;
@@ -30,7 +33,10 @@ public class KafkaController {
     mqValidationResult.setResponseTime(duration.toMillis());
     mqValidationResult.setService("Kafka");
     mqValidationResult.setLocation("Ali");
-    mqValidationResult.setAccessibility(false);
+    boolean isOK =
+        mqUsecase.testKafkaProducer(
+            "172.31.207.53:9092,172.31.207.54:9092,172.31.207.55:9092", "test-kafka-jacky");
+    mqValidationResult.setAccessibility(isOK);
     return this.mqValidationResult;
   }
 
@@ -47,7 +53,9 @@ public class KafkaController {
     mqValidationResult.setResponseTime(duration.toMillis());
     mqValidationResult.setService("Kafka");
     mqValidationResult.setLocation("Azure");
-    mqValidationResult.setAccessibility(false);
+    String brokers =
+        "wn0-kafka.ok5ezhn13onufoxnxqaanapjdd.bx.internal.chinacloudapp.cn:9092,wn1-kafka.ok5ezhn13onufoxnxqaanapjdd.bx.internal.chinacloudapp.cn:9092";
+    mqValidationResult.setAccessibility(mqUsecase.testKafkaProducer(brokers, "test"));
     return this.mqValidationResult;
   }
 }
