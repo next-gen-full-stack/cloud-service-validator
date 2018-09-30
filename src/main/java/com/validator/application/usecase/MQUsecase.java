@@ -5,14 +5,18 @@ import com.aliyun.openservices.ons.api.ONSFactory;
 import com.aliyun.openservices.ons.api.Producer;
 import com.aliyun.openservices.ons.api.PropertyKeyConst;
 import com.aliyun.openservices.ons.api.SendResult;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Properties;
+import java.util.Random;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MQUsecase {
 
-  public boolean testProducer() {
+  public boolean testMQProducer() {
     Properties properties = new Properties();
     // 您在控制台创建的 Producer ID
     properties.put(PropertyKeyConst.ProducerId, "PID_TEST_PRODUCER_JACKY");
@@ -30,7 +34,7 @@ public class MQUsecase {
     // 在发送消息前，必须调用 start 方法来启动 Producer，只需调用一次即可
     producer.start();
     // 循环发送消息
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 1; i++) {
       Message msg =
           new Message( //
               // Message 所属的 Topic
@@ -65,6 +69,54 @@ public class MQUsecase {
     // 在应用退出前，销毁 Producer 对象
     // 注意：如果不销毁也没有问题
     producer.shutdown();
+    return true;
+  }
+
+  public boolean testKafkaProducer(String brokers, String topicName) {
+    // Set properties used to configure the producer
+    Properties properties = new Properties();
+    // Set the brokers (bootstrap servers)
+    properties.setProperty("bootstrap.servers", brokers);
+    // Set how to serialize key/value pairs
+    properties.setProperty(
+        "key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+    properties.setProperty(
+        "value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+    // specify the protocol for Domain Joined clusters
+    // properties.setProperty(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, "SASL_PLAINTEXT");
+
+    KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
+    // So we can generate random sentences
+    Random random = new Random();
+    String[] sentences =
+        new String[] {
+          "the cow jumped over the moon",
+          "an apple a day keeps the doctor away",
+          "four score and seven years ago",
+          "snow white and the seven dwarfs",
+          "i am at two with nature"
+        };
+
+    String progressAnimation = "|/-\\";
+    // Produce a bunch of records
+    for (int i = 0; i < 1; i++) {
+      // Pick a sentence at random
+      String sentence = sentences[random.nextInt(sentences.length)];
+      // Send the sentence to the test topic
+      try {
+        producer.send(new ProducerRecord<String, String>(topicName, sentence)).get();
+      } catch (Exception ex) {
+        System.out.println(ex.getMessage());
+        return false;
+      }
+      String progressBar =
+          "\r" + progressAnimation.charAt(i % progressAnimation.length()) + " " + i;
+      try {
+        System.out.write(progressBar.getBytes());
+      } catch (IOException e) {
+        // do nothing;
+      }
+    }
     return true;
   }
 }
