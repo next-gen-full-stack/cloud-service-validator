@@ -34,7 +34,7 @@ public class MQUsecase {
     // 在发送消息前，必须调用 start 方法来启动 Producer，只需调用一次即可
     producer.start();
     // 循环发送消息
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 1; i++) {
       Message msg =
           new Message( //
               // Message 所属的 Topic
@@ -99,7 +99,7 @@ public class MQUsecase {
 
     String progressAnimation = "|/-\\";
     // Produce a bunch of records
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 1; i++) {
       // Pick a sentence at random
       String sentence = sentences[random.nextInt(sentences.length)];
       // Send the sentence to the test topic
