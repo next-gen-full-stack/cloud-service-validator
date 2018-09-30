@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 @AutoValue
 @ConfigurationProperties("k8s.azure")
-public class K8sConfiguration {
+public class K8sAzureConfiguration {
 
   private String apiUrl;
 

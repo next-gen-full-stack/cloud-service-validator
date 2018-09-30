@@ -2,8 +2,8 @@ package com.validator.controllers.api;
 
 import com.validator.beans.*;
 import com.validator.beans.configuration.GlobalConfiguration;
-import com.validator.beans.configuration.K8sConfiguration;
-import com.validator.beans.configuration.K8sConfigurationAliCloud;
+import com.validator.beans.configuration.K8sAliCloudConfiguration;
+import com.validator.beans.configuration.K8sAzureConfiguration;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import javax.servlet.http.HttpServletRequest;
@@ -11,31 +11,31 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
 @ComponentScan("com.validator.beans")
 public class K8sController {
 
-  private K8sValidationResult k8sValidationResult;
+  private K8sValidationResult k8sValidationResultAzure;
   private K8sValidationResult k8sValidationResultAliCloud;
-  private K8sConfiguration k8sConfigurationAzure;
-  private K8sConfigurationAliCloud k8sConfigurationAliCloud;
+  private K8sAzureConfiguration k8sConfigurationAzure;
+  private K8sAliCloudConfiguration k8sConfigurationAliCloud;
   private GlobalConfiguration globalConfiguration;
   private RestTemplate restTemplate;
 
   public K8sController(
       K8sValidationResult k8sValidationResult,
       K8sValidationResult k8sValidationResultAliCloud,
-      K8sConfiguration k8sConfigurationAzure,
-      K8sConfigurationAliCloud k8sConfigurationAliCloud,
+      K8sAzureConfiguration k8sConfigurationAzure,
+      K8sAliCloudConfiguration k8sConfigurationAliCloud,
       GlobalConfiguration globalConfiguration) {
     this.restTemplate = new RestTemplate();
-    this.k8sValidationResult = k8sValidationResult;
+    this.k8sValidationResultAzure = k8sValidationResult;
     this.k8sValidationResultAliCloud = k8sValidationResultAliCloud;
     this.k8sConfigurationAliCloud = k8sConfigurationAliCloud;
     this.k8sConfigurationAzure = k8sConfigurationAzure;
-    this.k8sConfigurationAliCloud = k8sConfigurationAliCloud;
     this.globalConfiguration = globalConfiguration;
   }
 
@@ -49,20 +49,26 @@ public class K8sController {
   K8sValidationResult azureK8s(HttpServletRequest request) {
 
     if (this.globalConfiguration.getLocation().equals(this.globalConfiguration.getAzure())) {
-      this.k8sValidationResult.setResponseTime(0);
-      this.k8sValidationResult.setLocation(this.globalConfiguration.getAzure());
-      return this.k8sValidationResult;
+      this.k8sValidationResultAzure.setResponseTime(0);
+      this.k8sValidationResultAzure.setLocation(this.globalConfiguration.getAzure());
+      return this.k8sValidationResultAzure;
     }
-    LocalDateTime oldDate = LocalDateTime.now();
 
-    this.k8sValidationResult =
-        this.restTemplate.getForObject(
-            this.k8sConfigurationAzure.getApiUrl(), K8sValidationResult.class);
-    Duration duration = Duration.between(oldDate, LocalDateTime.now());
+    try {
+      LocalDateTime oldDate = LocalDateTime.now();
 
-    this.k8sValidationResult.setResponseTime(duration.toMillis());
+      this.k8sValidationResultAzure =
+          this.restTemplate.getForObject(
+              this.k8sConfigurationAzure.getApiUrl(), K8sValidationResult.class);
+      Duration duration = Duration.between(oldDate, LocalDateTime.now());
 
-    return this.k8sValidationResult;
+      this.k8sValidationResultAzure.setResponseTime(duration.toMillis());
+
+    } catch (RestClientException ex) {
+      this.k8sValidationResultAzure.setAccessibility(false);
+    }
+
+    return this.k8sValidationResultAzure;
   }
 
   /**
@@ -81,15 +87,20 @@ public class K8sController {
       return this.k8sValidationResultAliCloud;
     }
 
-    LocalDateTime oldDate = LocalDateTime.now();
+    try {
 
-    this.k8sValidationResultAliCloud =
-        this.restTemplate.getForObject(
-            this.k8sConfigurationAliCloud.getApiUrl(), K8sValidationResult.class);
-    Duration duration = Duration.between(oldDate, LocalDateTime.now());
+      LocalDateTime oldDate = LocalDateTime.now();
 
-    this.k8sValidationResultAliCloud.setResponseTime(duration.toMillis());
+      this.k8sValidationResultAliCloud =
+          this.restTemplate.getForObject(
+              this.k8sConfigurationAliCloud.getApiUrl(), K8sValidationResult.class);
+      Duration duration = Duration.between(oldDate, LocalDateTime.now());
 
+      this.k8sValidationResultAliCloud.setResponseTime(duration.toMillis());
+
+    } catch (RestClientException ex) {
+      this.k8sValidationResultAliCloud.setAccessibility(false);
+    }
     return this.k8sValidationResultAliCloud;
   }
 }

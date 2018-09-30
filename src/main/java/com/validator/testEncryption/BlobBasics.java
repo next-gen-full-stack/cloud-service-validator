@@ -48,7 +48,7 @@ public class BlobBasics {
   public String testEncryptionPerform() throws Exception {
 
     System.out.println("\tCreating sample files 128M in size for upload demonstration.");
-    File sampleFile = createTempLocalFile("blockblob-", ".tmp", (128000 * 1024));
+    File sampleFile = createTempLocalFile("blockblob-", ".tmp", (10000 * 1024));
 
     // Create a blob client for interacting with the blob service
     CloudBlobClient blobClient = new BlobClientProvider().getBlobClientReference();
@@ -74,7 +74,7 @@ public class BlobBasics {
             + containerName
             + "] with file name:"
             + blockBlobName;
-    retStr += "<br> File size: 128M <br>Spent time: " + Math.round(spentTime) + "ms";
+    retStr += "<br> File size: 10.0M <br>Spent time: " + Math.round(spentTime) + "ms";
     return retStr;
   }
 
@@ -86,7 +86,7 @@ public class BlobBasics {
    * @param bytesToWrite The number of bytes to write to file.
    * @return The newly created File object
    */
-  static File createTempLocalFile(
+  public static File createTempLocalFile(
       String tempFileNamePrefix, String tempFileNameSuffix, int bytesToWrite)
       throws IOException, IllegalArgumentException {
 

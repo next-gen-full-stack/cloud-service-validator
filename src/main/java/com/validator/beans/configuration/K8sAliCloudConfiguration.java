@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 @AutoValue
 @ConfigurationProperties("k8s.alicloud")
-public class K8sConfigurationAliCloud {
+public class K8sAliCloudConfiguration {
 
   private String apiUrl;
 

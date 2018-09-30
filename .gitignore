@@ -30,4 +30,7 @@ build/
 .vscode/launch.json
 
 application-local.properties
+application.azure.properties
+application.alicloud.properties
 prod.sh
+deployment/
