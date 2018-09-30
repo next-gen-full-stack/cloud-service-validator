@@ -29,7 +29,7 @@ public class MQController {
   @RequestMapping("/api/v1/ping/ali/mq")
   MQValidationResult kafka(HttpServletRequest request) {
     LocalDateTime oldDate = LocalDateTime.now();
-    boolean isOk = mqUsecase.testProducer();
+    boolean isOk = mqUsecase.testMQProducer();
     mqValidationResult.setAccessibility(isOk);
     Duration duration = Duration.between(oldDate, LocalDateTime.now());
     mqValidationResult.setService("MQ");
