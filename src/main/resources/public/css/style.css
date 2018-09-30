@@ -77,7 +77,9 @@ body {
 .lh-125 { line-height: 1.25; }
 .lh-150 { line-height: 1.5; }
 
-
+.progress-bar-cloud {
+  text-transform: uppercase;
+}
 .ui-relative {
   position: relative;
 }

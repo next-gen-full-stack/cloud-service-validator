@@ -2,8 +2,9 @@
   'use strict'
 
   var ENDPOINTS = [];
-  var jContainer = $('.ui-cloud-providers');
+  var jContainer = $('.ui-cloud-providers'), jProgressBar = $('.progress-bar'), jProgressBarContainer = $('.progress');
   var jRequests = {};
+  var requestCount = 0;
 
   $('[data-toggle="offcanvas"]').on('click', function () {
     $('.offcanvas-collapse').toggleClass('open')
@@ -12,12 +13,20 @@
   var sendRequest = function() {
 
     var listOfKeys = Object.keys(jRequests);
-    if(listOfKeys.length > 0) {
-      var serviceId = listOfKeys[0];      
+    var requestLeft = listOfKeys.length;
+
+    if(requestLeft > 0) {
+      var serviceId = listOfKeys[0];
       var url = jRequests[serviceId].url;
       var name = jRequests[serviceId].name;
       var cloud = jRequests[serviceId].cloud;
       delete jRequests[serviceId];
+
+      var completedNumber = requestCount - (requestLeft - 1);
+      var percentNumber = Math.round(((completedNumber) / requestCount) * 100);
+      var percentText = percentNumber + '%';
+      var percentDisplay = name + ' ('+completedNumber + ' / ' + requestCount+')';
+      jProgressBar.text(percentDisplay).css('width', percentText).attr('aria-valuenow', percentNumber);
 
       var cContainer = $('#' + cloud);
       var rRowContainer = cContainer.find('.ui-table-body');
@@ -47,6 +56,7 @@
     }
     else {
       $('.ui-loader').hide();
+      jProgressBarContainer.hide();
     }
   };
 
@@ -74,6 +84,7 @@
           var serviceId = 'svc-'+cloud.id+'-'+service.name.toLowerCase();
 
           jRequests[serviceId] = { url: service.path, name: service.name, cloud: cloudId };
+          requestCount++;
         }
 
         jContainer.append(jCloudContainer);
