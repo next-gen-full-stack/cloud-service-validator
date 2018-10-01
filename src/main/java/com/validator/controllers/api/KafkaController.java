@@ -54,7 +54,7 @@ public class KafkaController {
     mqValidationResult.setService("Kafka");
     mqValidationResult.setLocation("Azure");
     String brokers =
-        "wn0-kafka.ok5ezhn13onufoxnxqaanapjdd.bx.internal.chinacloudapp.cn:9092,wn1-kafka.ok5ezhn13onufoxnxqaanapjdd.bx.internal.chinacloudapp.cn:9092";
+        "wn0-kafka.bn30bvr1eikujgaupttvmlz0gc.ax.internal.chinacloudapp.cn:9092,wn1-kafka.bn30bvr1eikujgaupttvmlz0gc.ax.internal.chinacloudapp.cn:9092";
     mqValidationResult.setAccessibility(mqUsecase.testKafkaProducer(brokers, "test"));
     return this.mqValidationResult;
   }
