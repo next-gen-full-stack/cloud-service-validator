@@ -82,9 +82,9 @@ public class MQUsecase {
         "key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
     properties.setProperty(
         "value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-    //properties.setProperty("request.timeout.ms","5000");//but not 30s
-    //properties.setProperty("timeout.ms","5000");//but not 30s
-    properties.setProperty("metadata.fetch.timeout.ms","6000");//but not 60s
+    // properties.setProperty("request.timeout.ms","5000");//but not 30s
+    // properties.setProperty("timeout.ms","5000");//but not 30s
+    properties.setProperty("metadata.fetch.timeout.ms", "6000"); // but not 60s
     // specify the protocol for Domain Joined clusters
     // properties.setProperty(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, "SASL_PLAINTEXT");
 
