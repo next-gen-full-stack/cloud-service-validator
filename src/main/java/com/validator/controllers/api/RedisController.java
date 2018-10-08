@@ -15,8 +15,7 @@ public class RedisController {
   private final RedisValidationResult redisValidationResult;
   private final RedisAliValidationResult aliRedisValidationResult;
 
-  public RedisController(
-      RedisValidationResult serviceValidationResult,
+  public RedisController(RedisValidationResult serviceValidationResult,
       RedisAliValidationResult aliRedisValidationResult) {
     this.redisValidationResult = serviceValidationResult;
     this.aliRedisValidationResult = aliRedisValidationResult;
@@ -35,8 +34,9 @@ public class RedisController {
       System.out.println(duration.getSeconds() + " seconds");
       this.redisValidationResult.setResult(result);
       this.redisValidationResult.setResponseTime(duration.toMillis());
-
+      this.redisValidationResult.setAccessibility(true);
     } catch (Exception e) {
+      this.redisValidationResult.setAccessibility(false);
       System.err.println(e.getClass().getName() + ":[EXCEPtION] " + e.getMessage());
     }
 
@@ -56,8 +56,9 @@ public class RedisController {
       System.out.println(duration.getSeconds() + " seconds");
       this.aliRedisValidationResult.setResult(result);
       this.aliRedisValidationResult.setResponseTime(duration.toMillis());
-
+      this.aliRedisValidationResult.setAccessibility(true);
     } catch (Exception e) {
+      this.aliRedisValidationResult.setAccessibility(false);
       System.err.println(e.getClass().getName() + ":[EXCEPtION-Ali] " + e.getMessage());
     }
 

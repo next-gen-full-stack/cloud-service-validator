@@ -22,8 +22,7 @@ public class MongodbController {
   private final MongodbValidationResult mgdbValidationResult;
   private final MongodbAliValidationResult alimgdbValidationResult;
 
-  public MongodbController(
-      MongodbValidationResult serviceValidationResult,
+  public MongodbController(MongodbValidationResult serviceValidationResult,
       MongodbAliValidationResult alivalidationResult) {
     this.mgdbValidationResult = serviceValidationResult;
     this.alimgdbValidationResult = alivalidationResult;
@@ -44,8 +43,9 @@ public class MongodbController {
       // count seconds between dates
       Duration duration = Duration.between(oldDate, newDate);
       this.mgdbValidationResult.setResponseTime(duration.toMillis());
-
+      this.mgdbValidationResult.setAccessibility(true);
     } catch (Exception e) {
+      this.mgdbValidationResult.setAccessibility(false);
       LOGGER.error(e.getClass().getName() + ":[EXCEPtION] " + e.getMessage());
     }
     return this.mgdbValidationResult;
@@ -69,8 +69,9 @@ public class MongodbController {
       // count seconds between dates
       Duration duration = Duration.between(oldDate, newDate);
       this.alimgdbValidationResult.setResponseTime(duration.toMillis());
-
+      this.alimgdbValidationResult.setAccessibility(true);
     } catch (Exception e) {
+      this.alimgdbValidationResult.setAccessibility(false);
       LOGGER.error(e.getClass().getName() + ":[EXCEPtION] " + e.getMessage());
     }
     return this.alimgdbValidationResult;
