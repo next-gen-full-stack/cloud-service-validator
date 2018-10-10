@@ -21,7 +21,7 @@ public class ApiGatewayController {
   @RequestMapping("/api/v1/ping/azureApigateway")
   ApiGatewayValidationResult azureApiGateway(HttpServletRequest request) {
     try {
-      // apiGatewayValidationResult.setService("azureApigateway");
+      apiGatewayValidationResult.setService("azureApigateway");
       LocalDateTime oldDate = LocalDateTime.now();
       String result = this.apiGatewayValidationResult.ping();
       LocalDateTime newDate = LocalDateTime.now();
@@ -38,8 +38,26 @@ public class ApiGatewayController {
   @RequestMapping("/api/v1/ping/aliyunApigateway")
   ApiGatewayValidationResult aliyunApiGateway(HttpServletRequest request) {
     try {
-      // apiGatewayValidationResult.setService("aliyunApigateway");
-      apiGatewayValidationResult.aliyunping();
+      apiGatewayValidationResult.setService("aliyunApigateway");
+      apiGatewayValidationResult.aliyunPing();
+      /*
+      HttpApiClient.getInstance()
+      .apiDemo(
+          new ApiCallback() {
+            public void onFailure(ApiRequest request, Exception e) {
+              e.printStackTrace();
+            }
+
+            public void onResponse(ApiRequest request, ApiResponse response) {
+              try {
+                System.out.println(apiGatewayValidationResult.getResultString(response));
+                //content=getResultString(response);
+              } catch (Exception ex) {
+                ex.printStackTrace();
+              }
+            }
+          });
+          */
     } catch (Exception e) {
       System.err.println(e.getClass().getName() + ":[EXCEPtION] " + e.getMessage());
     }

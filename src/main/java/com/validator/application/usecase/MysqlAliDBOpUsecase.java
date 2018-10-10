@@ -13,7 +13,7 @@ public class MysqlAliDBOpUsecase {
   @Qualifier("mysqlAliJdbcTemplate")
   private JdbcTemplate mysqlAliJdbcTemplate;
 
-  public QRCodeInfo searchById(String auto_navi_id) throws RuntimeException {
+  public QRCodeInfo searchById(String auto_navi_id) {
     String query =
         String.format("select * from qrcode_info where auto_navi_id = '%s' ", auto_navi_id);
 
@@ -21,7 +21,7 @@ public class MysqlAliDBOpUsecase {
         mysqlAliJdbcTemplate.queryForObject(query, new BeanPropertyRowMapper(QRCodeInfo.class));
   }
 
-  public Iterable<QRCodeInfo> findAll() throws RuntimeException {
+  public Iterable<QRCodeInfo> findAll() {
     String query = "select * from qrcode_info";
 
     return (Iterable<QRCodeInfo>)

@@ -13,7 +13,7 @@ public class PostgresqlAliDBOpUsecase {
   @Qualifier("postgresqlAliJdbcTemplate")
   private JdbcTemplate postgresqlAliJdbcTemplate;
 
-  public QRCodeInfo searchById(String auto_navi_id) throws RuntimeException {
+  public QRCodeInfo searchById(String auto_navi_id) {
     String query =
         String.format("select * from qrcode_info where auto_navi_id = '%s' ", auto_navi_id);
 
@@ -22,7 +22,7 @@ public class PostgresqlAliDBOpUsecase {
             query, new BeanPropertyRowMapper(QRCodeInfo.class));
   }
 
-  public Iterable<QRCodeInfo> findAll() throws RuntimeException {
+  public Iterable<QRCodeInfo> findAll() {
     String query = "select * from qrcode_info";
 
     return (Iterable<QRCodeInfo>)
