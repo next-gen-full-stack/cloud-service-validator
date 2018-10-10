@@ -79,6 +79,7 @@ body {
 
 .progress-bar-cloud {
   text-transform: uppercase;
+  overflow: hidden;
 }
 .ui-relative {
   position: relative;

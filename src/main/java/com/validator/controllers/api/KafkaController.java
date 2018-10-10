@@ -56,10 +56,10 @@ public class KafkaController {
     String brokers =
         "wn0-kafka.bn30bvr1eikujgaupttvmlz0gc.ax.internal.chinacloudapp.cn:9092,wn1-kafka.bn30bvr1eikujgaupttvmlz0gc.ax.internal.chinacloudapp.cn:9092";
     try {
-    	mqValidationResult.setAccessibility(mqUsecase.testKafkaProducer(brokers, "test"));
-    }catch(Exception e) {
-    	mqValidationResult.setAccessibility(false);
-    	e.printStackTrace();
+      mqValidationResult.setAccessibility(mqUsecase.testKafkaProducer(brokers, "test"));
+    } catch (Exception e) {
+      mqValidationResult.setAccessibility(false);
+      e.printStackTrace();
     }
     return this.mqValidationResult;
   }
