@@ -21,15 +21,15 @@ import com.microsoft.azure.storage.blob.CloudBlockBlob;
  * and CloudBlobClient.
  */
 public class BlobBasics {
-
-
+    
+    
     public String runSamples() throws Exception {
         // Create a blob client for interacting with the blob service
-    	CloudBlobClient blobClient = new BlobClientProvider().getBlobClientReference();
-    	String containerName = "testencrypt";
-    	CloudBlobContainer container = blobClient.getContainerReference(containerName);
+        CloudBlobClient blobClient = new BlobClientProvider().getBlobClientReference();
+        String containerName = "testencrypt";
+        CloudBlobContainer container = blobClient.getContainerReference(containerName);
         
-    	File sampleFile = null;
+        File sampleFile = null;
         sampleFile = File.createTempFile("sampleFile", ".txt");
         System.out.println(">> Creating a sample file at: " + sampleFile.toString());
         Writer output = new BufferedWriter(new FileWriter(sampleFile));
@@ -47,15 +47,15 @@ public class BlobBasics {
     
     
     public String testEncryptionPerform() throws Exception {
-    	
-    	
+        
+        
         System.out.println("\tCreating sample files 128M in size for upload demonstration.");
         File sampleFile = createTempLocalFile("blockblob-", ".tmp", (10000 * 1024) );
-
+        
         // Create a blob client for interacting with the blob service
-    	CloudBlobClient blobClient = new BlobClientProvider().getBlobClientReference();
-    	String containerName = "testencrypt";
-    	CloudBlobContainer container = blobClient.getContainerReference(containerName);
+        CloudBlobClient blobClient = new BlobClientProvider().getBlobClientReference();
+        String containerName = "testencrypt";
+        CloudBlobContainer container = blobClient.getContainerReference(containerName);
         
         System.out.println("\n\tStart Uploading blockbloc ...");
         SimpleDateFormat df = new SimpleDateFormat("MMddHHmmss");
@@ -63,13 +63,13 @@ public class BlobBasics {
         CloudBlockBlob blockBlob1 = container.getBlockBlobReference(blockBlobName);
         
         long start = Calendar.getInstance().getTimeInMillis();
-
+        
         blockBlob1.uploadFromFile(sampleFile.getPath());
-
+        
         long end = Calendar.getInstance().getTimeInMillis();
-
-        double spentTime = (double) end - start; 
-
+        
+        double spentTime = (double) end - start;
+        
         
         System.out.println("Successfully uploaded the blob.");
         String retStr = "Successfully uploaded the blob in container:[" + containerName + "] with file name:" + blockBlobName;
@@ -86,13 +86,13 @@ public class BlobBasics {
      * @return The newly created File object
      */
     public static File createTempLocalFile(String tempFileNamePrefix, String tempFileNameSuffix, int bytesToWrite) throws IOException, IllegalArgumentException{
-
+        
         File tempFile = null;
         FileOutputStream tempFileOutputStream = null;
         try {
             // Create the temporary file
             tempFile = File.createTempFile(tempFileNamePrefix, tempFileNameSuffix);
-
+            
             // Write random bytes to the file if requested
             Random random = new Random();
             byte[] randomBytes = new byte[4096];
@@ -108,7 +108,7 @@ public class BlobBasics {
             if (tempFileOutputStream != null) {
                 tempFileOutputStream.close();
             }
-
+            
             // Set the temporary file to delete on exit
             if (tempFile != null) {
                 tempFile.deleteOnExit();
@@ -116,6 +116,6 @@ public class BlobBasics {
         }
         return tempFile;
     }
-   
-
+    
+    
 }
