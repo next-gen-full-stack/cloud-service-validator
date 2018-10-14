@@ -21,9 +21,9 @@ public class MQUsecase {
     // 您在控制台创建的 Producer ID
     properties.put(PropertyKeyConst.ProducerId, "PID_TEST_PRODUCER_JACKY");
     // AccessKey 阿里云身份验证，在阿里云服务器管理控制台创建
-    properties.put(PropertyKeyConst.AccessKey, "LTAIPckWV5IHcny3");
+    properties.put(PropertyKeyConst.AccessKey, "");
     // SecretKey 阿里云身份验证，在阿里云服务器管理控制台创建
-    properties.put(PropertyKeyConst.SecretKey, "hxzEydhgkJnvY6bAlPOzS3LwMtoZYb");
+    properties.put(PropertyKeyConst.SecretKey, "");
     // 设置发送超时时间，单位毫秒
     properties.setProperty(PropertyKeyConst.SendMsgTimeoutMillis, "8000");
     // 设置 TCP 接入域名（此处以公共云生产环境为例）
